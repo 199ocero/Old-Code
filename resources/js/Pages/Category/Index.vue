@@ -1,9 +1,27 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import Pagination from "../../Components/Pagination.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { ref, watch } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
-defineProps({
+const props = defineProps({
   category: Object,
+  filters: Object,
+});
+
+const search = ref(props.filters.search);
+
+watch(search, (value) => {
+  Inertia.get(
+    "/category",
+    { search: value },
+    {
+      preserveState: true,
+      replace: true,
+    }
+  );
 });
 </script>
 
@@ -15,14 +33,32 @@ defineProps({
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="flex justify-end mb-5">
+        <div class="flex flex-col-reverse
+        md:justify-between
+        md:flex-row
+        items-center
+        mx-auto mb-5">
+
+          <div>
+            <TextInput
+            v-model="search"
+              id="category"
+              name="category"
+              type="text"
+              class="mt-1 block w-full"
+              placeholder="Search Category..."
+              required
+              autofocus
+            />
+          </div>
+          
           <Link
             href="category/create"
             as="button"
             type="button"
             class="
-              mr-5
-              md:mr-0
+              mb-5
+              md:mb-0
               bg-indigo-600
               hover:bg-indigo-700
               text-white
@@ -38,6 +74,8 @@ defineProps({
 
         <div class="overflow-hidden shadow-sm rounded-lg">
           <div class="overflow-x-auto relative px-5 md:px-0">
+            
+                
 
             <div class="overflow-x-auto relative">
               <table
@@ -56,14 +94,13 @@ defineProps({
                   "
                 >
                   <tr>
-                    <th scope="col" class="py-3 px-6">No</th>
                     <th scope="col" class="py-3 px-6">Category</th>
                     <th scope="col" class="py-3 px-6">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                  v-for="(category, itemObjKey) in category.data"
+                  v-for="category in props.category.data"
             :key="category.id"
                     class="
                       bg-white
@@ -71,7 +108,6 @@ defineProps({
                       dark:bg-gray-800 dark:border-gray-700
                     "
                   >
-                  <td class="py-4 px-6">{{itemObjKey+1}}</td>
                     <th
                       scope="row"
                       class="
@@ -130,6 +166,12 @@ defineProps({
                   </tr>
                 </tbody>
               </table>
+              
+            </div>
+            <div class="bg-[#0E1726]">
+              <div class="p-6 bg-[#0E1726] text-white">
+                <Pagination :links="category.meta.links"></Pagination>
+              </div>
             </div>
           </div>
         </div>
