@@ -5,6 +5,7 @@ import Pagination from "../../Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
+import debounce from "lodash/debounce";
 
 const props = defineProps({
   category: Object,
@@ -13,16 +14,19 @@ const props = defineProps({
 
 const search = ref(props.filters.search);
 
-watch(search, (value) => {
-  Inertia.get(
-    "/category",
-    { search: value },
-    {
-      preserveState: true,
-      replace: true,
-    }
-  );
-});
+watch(
+  search,
+  debounce(function (value) {
+    Inertia.get(
+      "/category",
+      { search: value },
+      {
+        preserveState: true,
+        replace: true,
+      }
+    );
+  }, 300)
+);
 </script>
 
 <template>
@@ -48,7 +52,6 @@ watch(search, (value) => {
               class="mt-1 block w-full"
               placeholder="Search Category..."
               required
-              autofocus
             />
           </div>
           
