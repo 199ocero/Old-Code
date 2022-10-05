@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -18,8 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $category = CategoryResource::collection(Category::latest()->get()->paginate(5));
-        return Inertia::render('Category/Index',[
+        if(Auth::user()->hasRole('admin')){
+            return Inertia::render('Category/Index',[
             'category' => CategoryResource::collection(Category::query()
                                             ->when(FacadesRequest::input('search'),function($query,$search){
                                                 $query->where('category','like', "%{$search}%");
@@ -28,6 +29,10 @@ class CategoryController extends Controller
                                             ->withQueryString()),
             'filters' => FacadesRequest::only(['search'])
         ]);
+        }else{
+            return redirect('dashboard');
+        }
+        
     }
 
     /**
@@ -37,7 +42,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Category/Create');
+        if(Auth::user()->hasRole('admin')){
+            return Inertia::render('Category/Create');
+        }else{
+            return redirect('dashboard');
+        }
+        
     }
 
     /**
@@ -77,9 +87,14 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Category/Edit',[
-            'category'=>$category,
-        ]);
+        if(Auth::user()->hasRole('admin')){
+            return Inertia::render('Category/Edit',[
+                'category'=>$category,
+            ]);
+        }else{
+            return redirect('dashboard');
+        }
+        
     }
 
     /**
@@ -109,6 +124,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        
         $category->delete();
         return Redirect::back();
     }
