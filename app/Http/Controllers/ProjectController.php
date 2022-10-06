@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProjectCategory;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Redirect;
@@ -22,7 +23,7 @@ class ProjectController extends Controller
     public function index()
     {
         
-        $project = ProjectResource::collection(Project::latest()->get());
+        $project = ProjectResource::collection(Project::latest()->where('user_id',Auth::id())->get());
         return Inertia::render('Project/Index',compact('project'));
     }
 
@@ -53,6 +54,7 @@ class ProjectController extends Controller
             'category'=>['required'],
         ]);
         $project = Project::create([
+            'user_id'=>Auth::id(),
             'title'=>$request->title,
             'description'=>$request->description,
             'instruction'=>$request->instruction,
