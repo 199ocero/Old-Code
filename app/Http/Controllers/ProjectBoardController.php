@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Resources\ProjectResource;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\ProjectResource;
 
-class WelcomeController extends Controller
+class ProjectBoardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $project = ProjectResource::collection(Project::latest()->take(4)->get());
-        return Inertia::render('Welcome',[
+        $project = ProjectResource::collection(Project::latest()->paginate(10));
+        return Inertia::render('ProjectBoard/Index',[
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'project'=>$project
@@ -54,7 +54,12 @@ class WelcomeController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = ProjectResource::make(Project::find($id));
+        return Inertia::render('ProjectBoard/Details',[
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'project'=>$project
+        ]);
     }
 
     /**

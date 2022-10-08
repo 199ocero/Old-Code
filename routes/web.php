@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProjectBoardController;
 use App\Http\Controllers\WelcomeController;
 
 /*
@@ -18,7 +19,9 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
+/*Public Url*/
 Route::get('/',[WelcomeController::class,'index'])->name('home');
+Route::resource('/project-board',ProjectBoardController::class);
 
 Route::middleware([
     'auth:sanctum',

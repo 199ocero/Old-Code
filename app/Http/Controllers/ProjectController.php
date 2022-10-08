@@ -50,7 +50,7 @@ class ProjectController extends Controller
             'title'=>['required','min:3'],
             'description'=>['required','min:3'],
             'instruction'=>['required','min:3'],
-            'url'=>['required','min:3'],
+            'url'=>['required','url','min:3'],
             'category'=>['required'],
         ]);
         $project = Project::create([
@@ -114,7 +114,7 @@ class ProjectController extends Controller
             'title'=>['required','min:3'],
             'description'=>['required','min:3'],
             'instruction'=>['required','min:3'],
-            'url'=>['required','min:3'],
+            'url'=>['required','url','min:3'],
             'category'=>['required'],
         ]);
         $project->update([

@@ -25,6 +25,7 @@ class CategoryController extends Controller
                                             ->when(FacadesRequest::input('search'),function($query,$search){
                                                 $query->where('category','like', "%{$search}%");
                                             })
+                                            ->latest()
                                             ->paginate(5)
                                             ->withQueryString()),
             'filters' => FacadesRequest::only(['search'])
