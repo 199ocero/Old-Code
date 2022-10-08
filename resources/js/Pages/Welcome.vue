@@ -87,7 +87,7 @@ defineProps({
             class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12"
         >
             <h1
-                class="mb-4 text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+                class="mb-4 text-6xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-white"
             >
                 OLDCODE
             </h1>
@@ -110,33 +110,19 @@ defineProps({
                     class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white"
                 >
                     Learn more
-                    <svg
-                        class="ml-2 -mr-1 w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"
-                        ></path>
-                    </svg>
+                    <font-awesome-icon
+                        icon="fa-solid fa-arrow-right"
+                        class="ml-2 -mr-1"
+                    />
                 </p>
                 <a
                     href="#"
                     class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                 >
-                    <svg
-                        class="mr-2 -ml-1 w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"
-                        ></path>
-                    </svg>
+                    <font-awesome-icon
+                        icon="fa-solid fa-video"
+                        class="mr-2 -ml-1"
+                    />
                     Watch video
                 </a>
             </div>
@@ -157,13 +143,14 @@ defineProps({
                 >
                     Here are the latest project posts
                 </p>
+
                 <div
                     v-for="project in project.data"
                     :key="project.id"
                     class="rounded-lg bg-[#0E1726] py-2 px-5 mb-5 mx-3 md:mx-0 cursor-pointer shadow hover:shadow-lg hover:bg-gradient-to-l from-gray-700 hover:scale-105 duration-200"
                 >
-                    <div class="grid grid-cols-1">
-                        <div class="flex justify-between">
+                    <Link :href="route('project-board.show', project.id)">
+                        <div class="grid grid-cols-1">
                             <div class="flex items-center space-x-3">
                                 <div
                                     class="relative w-5 h-5 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-[#ED4551]/20"
@@ -176,33 +163,32 @@ defineProps({
                                     {{ project.user.name }}
                                 </p>
                             </div>
-                            <Link
-                                :href="route('project-board.show', project.id)"
-                                as="button"
-                                type="button"
-                                class="text-sm bg-indigo-600 hover:bg-indigo-700 px-5 text-white font-bold rounded shadow-lg shadow-indigo-600/20"
-                                >See project</Link
-                            >
-                        </div>
 
-                        <p class="text-sm text-gray-500 mt-3">Title</p>
-                        <p class="text-base font-semibold text-white truncate">
-                            {{ project.title }}
-                        </p>
-                        <p class="text-sm text-gray-500">Description</p>
-                        <p class="text-base font-semibold text-white truncate">
-                            {{ project.description }}
-                        </p>
-                        <div class="flex flex-wrap mt-2">
-                            <span
-                                v-for="projectCategory in project.category"
-                                :key="projectCategory.id"
-                                class="text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
+                            <p class="text-sm text-gray-500 mt-3">Title</p>
+                            <p
+                                class="text-base font-semibold text-white truncate"
                             >
-                                {{ projectCategory.category.category }}</span
+                                {{ project.title }}
+                            </p>
+                            <p class="text-sm text-gray-500">Description</p>
+                            <p
+                                class="text-sm font-semibold text-white line-clamp-3"
                             >
+                                {{ project.description }}
+                            </p>
+                            <div class="flex flex-wrap mt-2">
+                                <span
+                                    v-for="projectCategory in project.category"
+                                    :key="projectCategory.id"
+                                    class="text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
+                                >
+                                    {{
+                                        projectCategory.category.category
+                                    }}</span
+                                >
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
                 <div class="text-center">
                     <Link

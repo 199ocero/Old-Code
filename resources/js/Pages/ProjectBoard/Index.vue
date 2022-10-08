@@ -138,13 +138,17 @@ defineProps({
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Title</p>
-                                <p class="text-lg font-semibold text-white">
+                                <p
+                                    class="text-lg font-semibold text-white line-clamp-2"
+                                >
                                     {{ project.title }}
                                 </p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Description</p>
-                                <p class="text-base font-semibold text-white">
+                                <p
+                                    class="text-base font-semibold text-white line-clamp-3"
+                                >
                                     {{ project.description }}
                                 </p>
                             </div>
