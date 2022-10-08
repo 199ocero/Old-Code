@@ -88,7 +88,7 @@ defineProps({
             </div>
         </div>
     </nav>
-    <section class="relative py-20 mt-20">
+    <section class="relative pt-20 pb-8 mt-20">
         <div
             class="z-0 absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-[250px] opacity-40"
         ></div>
@@ -121,64 +121,61 @@ defineProps({
                     <div
                         v-for="project in project.data"
                         :key="project.id"
-                        class="rounded-lg bg-[#0E1726] p-6"
+                        class="rounded-lg bg-[#0E1726] p-6 cursor-pointer shadow hover:shadow-lg hover:bg-gradient-to-l from-gray-700 hover:scale-105 duration-200"
                     >
-                        <div class="space-y-5">
-                            <div class="flex items-center space-x-3 mb-3">
-                                <div
-                                    class="relative w-5 h-5 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-[#ED4551]/20"
-                                >
-                                    <p class="text-base text-uppercase">
-                                        {{ project.user.name[0] }}
+                        <Link :href="route('project-board.show', project.id)">
+                            <div class="space-y-5">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div
+                                        class="relative w-5 h-5 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-[#ED4551]/20"
+                                    >
+                                        <p class="text-base text-uppercase">
+                                            {{ project.user.name[0] }}
+                                        </p>
+                                    </div>
+                                    <p
+                                        class="text-base font-semibold text-white"
+                                    >
+                                        {{ project.user.name }}
                                     </p>
                                 </div>
-                                <p class="text-base font-semibold text-white">
-                                    {{ project.user.name }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Title</p>
-                                <p
-                                    class="text-lg font-semibold text-white line-clamp-2"
-                                >
-                                    {{ project.title }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Description</p>
-                                <p
-                                    class="text-base font-semibold text-white line-clamp-3"
-                                >
-                                    {{ project.description }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Category</p>
-                                <div class="flex flex-wrap mt-2">
-                                    <span
-                                        v-for="projectCategory in project.category"
-                                        :key="projectCategory.id"
-                                        class="text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300"
+                                <div>
+                                    <p class="text-sm text-gray-500">Title</p>
+                                    <p
+                                        class="text-lg font-semibold text-white line-clamp-2"
                                     >
-                                        {{
-                                            projectCategory.category.category
-                                        }}</span
+                                        {{ project.title }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">
+                                        Description
+                                    </p>
+                                    <p
+                                        class="text-base font-semibold text-white line-clamp-3"
                                     >
+                                        {{ project.description }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">
+                                        Category
+                                    </p>
+                                    <div class="flex flex-wrap mt-2">
+                                        <span
+                                            v-for="projectCategory in project.category"
+                                            :key="projectCategory.id"
+                                            class="text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded bg-gray-700 text-gray-300"
+                                        >
+                                            {{
+                                                projectCategory.category
+                                                    .category
+                                            }}</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                            <hr class="bg-gray-500 opacity-20" />
-                            <div class="text-center">
-                                <Link
-                                    :href="
-                                        route('project-board.show', project.id)
-                                    "
-                                    as="button"
-                                    type="button"
-                                    class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-bold mr-2 py-2 px-4 rounded shadow-lg shadow-indigo-600/20"
-                                    >See project</Link
-                                >
-                            </div>
-                        </div>
+                        </Link>
                     </div>
                 </div>
                 <div class="bg-[#0E1726] text-white mt-5 p-6 rounded-lg">

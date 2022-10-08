@@ -79,7 +79,7 @@ defineProps({
             </div>
         </div>
     </nav>
-    <section class="relative py-20 mt-20">
+    <section class="relative pt-20 pb-8 mt-20">
         <div
             class="z-0 absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-[250px] opacity-40"
         ></div>
@@ -97,7 +97,7 @@ defineProps({
                 The code-sharing platform for developers
             </h1>
             <p
-                class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
+                class="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 text-gray-400"
             >
                 Here at OldCode, we put a lot of emphasis on developers who wish
                 to share their old abandoned projects and enable other
@@ -170,12 +170,15 @@ defineProps({
                             >
                                 {{ project.title }}
                             </p>
-                            <p class="text-sm text-gray-500">Description</p>
+                            <p class="text-sm text-gray-500 mt-3">
+                                Description
+                            </p>
                             <p
                                 class="text-sm font-semibold text-white line-clamp-3"
                             >
                                 {{ project.description }}
                             </p>
+                            <p class="text-sm text-gray-500 mt-3">Category</p>
                             <div class="flex flex-wrap mt-2">
                                 <span
                                     v-for="projectCategory in project.category"

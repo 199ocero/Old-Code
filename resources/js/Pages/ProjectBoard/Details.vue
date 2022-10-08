@@ -2,11 +2,23 @@
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import TextInput from "@/Components/TextInput.vue";
 import Pagination from "../../Components/Pagination.vue";
+
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     project: Object,
 });
+</script>
+<script>
+export default {
+    methods: {
+        showInstruction() {
+            const instruction = document.getElementById("showInstruction");
+            instruction.classList.toggle("flex");
+            instruction.classList.toggle("hidden");
+        },
+    },
+};
 </script>
 
 <template>
@@ -130,21 +142,41 @@ defineProps({
                         </div>
                         <div class="space-y-3">
                             <p class="text-sm text-gray-500">Instruction</p>
-                            <p
-                                class="text-base font-semibold text-white truncate"
-                            >
+                            <span class="text-base font-semibold text-white">
                                 <pre>{{ project.data.instruction }}</pre>
-                            </p>
+                            </span>
                         </div>
                         <div class="space-y-3">
-                            <p class="text-sm text-gray-500">Github URL</p>
-                            <a
-                                :href="project.data.url"
-                                target="_blank"
-                                class="text-white hover:text-indigo-300"
-                                >{{ project.data.url }}</a
+                            <p class="text-sm text-gray-500">
+                                Github URL
+                                <font-awesome-icon
+                                    icon="fa-solid fa-circle-info"
+                                    class="cursor-pointer"
+                                    @click="showInstruction()"
+                                />
+                            </p>
+                            <p
+                                id="showInstruction"
+                                class="hidden text-sm font-semibold text-white bg-[#0b0c16] p-3 rounded"
+                            >
+                                You must send an approval request to the author
+                                and wait for them to accept it before you can
+                                view the project URL.
+                            </p>
+                            <Link
+                                href="#"
+                                as="button"
+                                type="button"
+                                class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2.5 px-2.5 rounded shadow-lg shadow-green-600/20"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-share-from-square"
+                                    class="ml-2"
+                                />
+                                Sent Request</Link
                             >
                         </div>
+
                         <div class="space-y-3">
                             <p class="text-sm text-gray-500">Category</p>
                             <div class="flex flex-wrap mt-2">
