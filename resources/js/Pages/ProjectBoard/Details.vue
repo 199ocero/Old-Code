@@ -112,11 +112,6 @@ export default {
             >
                 {{ project.data.title }}
             </h1>
-            <h1
-                class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-            >
-                {{ project.data.description }}
-            </h1>
         </div>
     </section>
 
@@ -130,7 +125,7 @@ export default {
                     <div class="grid grid-cols-1 space-y-8">
                         <div class="flex items-center space-x-3 pt-5">
                             <div
-                                class="relative w-5 h-5 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-[#ED4551]/20"
+                                class="relative w-5 h-5 text-white bg-blue-600 rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-blue-600/20"
                             >
                                 <p class="text-base text-uppercase">
                                     {{ project.data.user.name[0] }}
@@ -141,28 +136,47 @@ export default {
                             </p>
                         </div>
                         <div class="space-y-3">
-                            <p class="text-sm text-gray-500">Instruction</p>
+                            <p class="text-sm text-gray-500">Description</p>
                             <span class="text-base font-semibold text-white">
-                                <pre>{{ project.data.instruction }}</pre>
+                                <pre class="whitespace-pre-wrap">{{
+                                    project.data.description
+                                }}</pre>
                             </span>
                         </div>
                         <div class="space-y-3">
-                            <p class="text-sm text-gray-500">
-                                Github URL
+                            <p class="text-sm text-gray-500">Instruction</p>
+                            <span class="text-base font-semibold text-white">
+                                <pre class="whitespace-pre-wrap">{{
+                                    project.data.instruction
+                                }}</pre>
+                            </span>
+                        </div>
+                        <div class="space-y-3">
+                            <p
+                                class="text-sm text-gray-500 cursor-pointer hover:text-green-600"
+                                @click="showInstruction()"
+                            >
+                                Project URL
                                 <font-awesome-icon
                                     icon="fa-solid fa-circle-info"
-                                    class="cursor-pointer"
-                                    @click="showInstruction()"
                                 />
                             </p>
-                            <p
+                            <div
                                 id="showInstruction"
-                                class="hidden text-sm font-semibold text-white bg-[#0b0c16] p-3 rounded"
+                                class="hidden justify-start items-center p-2 text-sm text-white bg-[#060818] rounded"
                             >
+                                <!-- <div
+                                    class="relative mr-3 w-3 h-3 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-4 shadow-lg shadow-[#ED4551]/20"
+                                ></div> -->
+                                <font-awesome-icon
+                                    icon="fa-solid fa-triangle-exclamation"
+                                    class="text-lg font-bold mr-2 text-red-400"
+                                />
                                 You must send an approval request to the author
                                 and wait for them to accept it before you can
                                 view the project URL.
-                            </p>
+                            </div>
+
                             <Link
                                 href="#"
                                 as="button"

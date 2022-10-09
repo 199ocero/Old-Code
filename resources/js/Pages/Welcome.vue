@@ -153,7 +153,7 @@ defineProps({
                         <div class="grid grid-cols-1">
                             <div class="flex items-center space-x-3">
                                 <div
-                                    class="relative w-5 h-5 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-[#ED4551]/20"
+                                    class="relative w-5 h-5 text-white bg-blue-600 rounded-full flex justify-center items-center text-center p-5 shadow-lg shadow-blue-600/20"
                                 >
                                     <p class="text-base text-uppercase">
                                         {{ project.user.name[0] }}

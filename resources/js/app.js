@@ -22,10 +22,17 @@ import {
     faVideo,
     faShareFromSquare,
     faCircleInfo,
+    faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faArrowRight, faVideo, faShareFromSquare, faCircleInfo);
+library.add(
+    faArrowRight,
+    faVideo,
+    faShareFromSquare,
+    faCircleInfo,
+    faTriangleExclamation
+);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
