@@ -37,12 +37,14 @@ class RequestPermissionController extends Controller
             $reqPermission = RequestPermission::where('project_id',$id)->where('requester_id',Auth::id())->get();
             if(Auth::id()===$checkUser->user_id || count($reqPermission)!=0){
                 return Redirect::route('project-board.show',$id);
-            }else
-            return Inertia::render('Request/Create',[
+            }else{
+                return Inertia::render('Request/Create',[
                 'canLogin' => Route::has('login'),
                 'canRegister' => Route::has('register'),
                 'project'=>$project
             ]);
+            }
+            
         }
         
     }
