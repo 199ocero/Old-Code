@@ -10,6 +10,8 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('img/oldcode.svg') }}">
     <!-- Scripts -->
     @routes
     @vite('resources/js/app.js')
