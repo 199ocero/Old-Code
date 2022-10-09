@@ -23,6 +23,8 @@ import {
     faShareFromSquare,
     faCircleInfo,
     faTriangleExclamation,
+    faCircleCheck,
+    faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
@@ -31,7 +33,9 @@ library.add(
     faVideo,
     faShareFromSquare,
     faCircleInfo,
-    faTriangleExclamation
+    faTriangleExclamation,
+    faCircleCheck,
+    faCircleNotch
 );
 
 createInertiaApp({

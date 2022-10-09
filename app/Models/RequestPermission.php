@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class RequestPermission extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'project_id',
+        'requester_id',
+        'request',
+    ];
 }

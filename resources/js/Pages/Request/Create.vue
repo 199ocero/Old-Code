@@ -13,6 +13,10 @@ const props = defineProps({
 const form = useForm({
     request: "",
 });
+
+const submit = () => {
+    form.post(route("request.store", props.project.data.id));
+};
 </script>
 
 <template>
@@ -126,12 +130,11 @@ const form = useForm({
                                         class="mt-1 block w-full text-white bg-[#1B2E4B] focus:border-indigo-600 focus:ring-indigo-600 border-none rounded-md shadow-sm"
                                         :placeholder="
                                             'Hi ' +
-                                            project.data.user.name +
+                                            props.project.data.user.name +
                                             ', I want to continue this wonderfull project...'
                                         "
                                         rows="5"
                                         autofocus
-                                        required
                                     />
                                     <InputError
                                         class="mt-2"

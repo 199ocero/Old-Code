@@ -186,20 +186,34 @@ export default {
                             <Link
                                 :class="{
                                     'cursor-not-allowed disabled:opacity-30':
-                                        $page.props.is_author === true,
+                                        $page.props.is_author === true ||
+                                        $page.props.is_requested === true,
                                 }"
-                                :disabled="$page.props.is_author === true"
+                                :disabled="
+                                    $page.props.is_author === true ||
+                                    $page.props.is_requested === true
+                                "
                                 :href="route('request.create', project.data.id)"
                                 as="button"
                                 type="button"
                                 class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2.5 px-2.5 rounded shadow-lg shadow-green-600/20"
                             >
                                 <font-awesome-icon
-                                    icon="fa-solid fa-share-from-square"
-                                    class="ml-2"
+                                    v-if="$page.props.is_requested === true"
+                                    icon="fa-solid fa-circle-notch"
+                                    class="mr-2 animate-spin"
                                 />
-                                Sent Request</Link
-                            >
+                                <font-awesome-icon
+                                    v-else
+                                    icon="fa-solid fa-share-from-square"
+                                    class="mr-2"
+                                />
+
+                                <span v-if="$page.props.is_requested === true"
+                                    >Waiting for Request Approval</span
+                                >
+                                <span v-else>Sent Request</span>
+                            </Link>
                             <div
                                 :class="{
                                     flex: $page.props.is_author === true,
@@ -216,7 +230,25 @@ export default {
                                 have no permission to do this task.
                             </div>
                         </div>
-
+                        <!-- <div v-else>
+                            <p class="text-sm text-gray-500">Project URL</p>
+                            <a
+                                :href="project.data.url"
+                                target="_blank"
+                                class="text-white hover:text-indigo-300"
+                            >
+                                {{ project.data.url }}</a
+                            >
+                            <br />
+                            <span
+                                class="text-sm mb-2 px-2.5 py-0.5 rounded bg-green-600 text-white shadow-lg shadow-green-600/20"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-circle-check"
+                                />
+                                Approve</span
+                            >
+                        </div> -->
                         <div class="space-y-3">
                             <p class="text-sm text-gray-500">Category</p>
                             <div class="flex flex-wrap mt-2">

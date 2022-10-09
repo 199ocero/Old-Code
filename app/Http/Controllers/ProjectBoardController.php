@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\ProjectResource;
+use App\Models\RequestPermission;
 
 class ProjectBoardController extends Controller
 {
@@ -57,6 +58,7 @@ class ProjectBoardController extends Controller
     {
         $project = ProjectResource::make(Project::find($id));
         $checkUser = Project::find($id);
+
         if(Auth::id()===$checkUser->user_id){
             return Inertia::render('ProjectBoard/Details',[
                 'canLogin' => Route::has('login'),
@@ -65,12 +67,26 @@ class ProjectBoardController extends Controller
                 'is_author'=>true
             ]);
         }else{
-            return Inertia::render('ProjectBoard/Details',[
-                'canLogin' => Route::has('login'),
-                'canRegister' => Route::has('register'),
-                'project'=>$project,
-                'is_author'=>false
-            ]);
+            $reqPermission = RequestPermission::where('project_id',$id)->where('requester_id',Auth::id())->get();
+            
+            if(count($reqPermission->toArray())!=0){
+                return Inertia::render('ProjectBoard/Details',[
+                    'canLogin' => Route::has('login'),
+                    'canRegister' => Route::has('register'),
+                    'project'=>$project,
+                    'is_author'=>false,
+                    'is_requested'=>true,
+                ]);
+            }else{
+                return Inertia::render('ProjectBoard/Details',[
+                    'canLogin' => Route::has('login'),
+                    'canRegister' => Route::has('register'),
+                    'project'=>$project,
+                    'is_author'=>false,
+                    'is_requested'=>false,
+                ]);
+            }
+           
         }
         
     }

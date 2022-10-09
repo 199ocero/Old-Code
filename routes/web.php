@@ -38,4 +38,5 @@ Route::middleware([
 
     // Request
     Route::get('/request/{id}',[RequestPermissionController::class,'create'])->name('request.create');
+    Route::post('/request/{id}',[RequestPermissionController::class,'store'])->name('request.store');
 });

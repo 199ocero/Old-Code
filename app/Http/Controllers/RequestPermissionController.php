@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\ProjectResource;
+use App\Models\RequestPermission;
 use Illuminate\Support\Facades\Redirect;
 
 class RequestPermissionController extends Controller
@@ -33,9 +34,10 @@ class RequestPermissionController extends Controller
             
             $project = ProjectResource::make(Project::find($id));
             $checkUser = Project::find($id);
-            if(Auth::id()===$checkUser->user_id){
+            $reqPermission = RequestPermission::where('project_id',$id)->where('requester_id',Auth::id())->get();
+            if(Auth::id()===$checkUser->user_id || count($reqPermission)!=0){
                 return Redirect::route('project-board.show',$id);
-            }
+            }else
             return Inertia::render('Request/Create',[
                 'canLogin' => Route::has('login'),
                 'canRegister' => Route::has('register'),
@@ -51,9 +53,18 @@ class RequestPermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $request->validate([
+            'request'=>['required','min:3'],
+        ]);
+        RequestPermission::create([
+            'project_id'=>$id,
+            'requester_id'=>Auth::id(),
+            'request'=>$request->input('request'),
+        ]);
+
+        return Redirect::route('project-board.show',$id);
     }
 
     /**
