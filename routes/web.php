@@ -4,9 +4,10 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectBoardController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\RequestPermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,7 @@ Route::middleware([
 
     Route::resource('/projects',ProjectController::class);
     Route::resource('/category',CategoryController::class);
+
+    // Request
+    Route::get('/request/{id}',[RequestPermissionController::class,'create'])->name('request.create');
 });

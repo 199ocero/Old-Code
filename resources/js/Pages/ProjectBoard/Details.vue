@@ -153,11 +153,20 @@ export default {
                         </div>
                         <div class="space-y-3">
                             <p
-                                class="text-sm text-gray-500 cursor-pointer hover:text-green-600"
-                                @click="showInstruction()"
+                                :class="{
+                                    'cursor-pointer hover:text-green-600':
+                                        $page.props.is_author === false,
+                                }"
+                                class="text-sm text-gray-500"
+                                @click="
+                                    $page.props.is_author === false
+                                        ? showInstruction()
+                                        : null
+                                "
                             >
                                 Project URL
                                 <font-awesome-icon
+                                    v-if="$page.props.is_author === false"
                                     icon="fa-solid fa-circle-info"
                                 />
                             </p>
@@ -165,9 +174,6 @@ export default {
                                 id="showInstruction"
                                 class="hidden justify-start items-center p-2 text-sm text-white bg-[#060818] rounded"
                             >
-                                <!-- <div
-                                    class="relative mr-3 w-3 h-3 text-white bg-[#ED4551] rounded-full flex justify-center items-center text-center p-4 shadow-lg shadow-[#ED4551]/20"
-                                ></div> -->
                                 <font-awesome-icon
                                     icon="fa-solid fa-triangle-exclamation"
                                     class="text-lg font-bold mr-2 text-red-400"
@@ -178,7 +184,12 @@ export default {
                             </div>
 
                             <Link
-                                href="#"
+                                :class="{
+                                    'cursor-not-allowed disabled:opacity-30':
+                                        $page.props.is_author === true,
+                                }"
+                                :disabled="$page.props.is_author === true"
+                                :href="route('request.create', project.data.id)"
                                 as="button"
                                 type="button"
                                 class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2.5 px-2.5 rounded shadow-lg shadow-green-600/20"
@@ -189,6 +200,21 @@ export default {
                                 />
                                 Sent Request</Link
                             >
+                            <div
+                                :class="{
+                                    flex: $page.props.is_author === true,
+                                    hidden: $page.props.is_author === false,
+                                }"
+                                class="justify-start items-center p-2 text-sm text-white bg-[#060818] rounded"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-triangle-exclamation"
+                                    class="text-lg font-bold mr-2 text-red-400"
+                                />
+                                If the sent request button is disabled, it means
+                                that you are the author of this project and you
+                                have no permission to do this task.
+                            </div>
                         </div>
 
                         <div class="space-y-3">

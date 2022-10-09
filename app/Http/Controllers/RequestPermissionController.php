@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\ProjectResource;
+use Illuminate\Support\Facades\Redirect;
 
-class ProjectBoardController extends Controller
+class RequestPermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +19,7 @@ class ProjectBoardController extends Controller
      */
     public function index()
     {
-        $project = ProjectResource::collection(Project::latest()->paginate(10));
-        return Inertia::render('ProjectBoard/Index',[
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'project'=>$project
-        ]);
+        // 
     }
 
     /**
@@ -31,9 +27,22 @@ class ProjectBoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        if(Auth::check()){
+            
+            $project = ProjectResource::make(Project::find($id));
+            $checkUser = Project::find($id);
+            if(Auth::id()===$checkUser->user_id){
+                return Redirect::route('project-board.show',$id);
+            }
+            return Inertia::render('Request/Create',[
+                'canLogin' => Route::has('login'),
+                'canRegister' => Route::has('register'),
+                'project'=>$project
+            ]);
+        }
+        
     }
 
     /**
@@ -55,24 +64,7 @@ class ProjectBoardController extends Controller
      */
     public function show($id)
     {
-        $project = ProjectResource::make(Project::find($id));
-        $checkUser = Project::find($id);
-        if(Auth::id()===$checkUser->user_id){
-            return Inertia::render('ProjectBoard/Details',[
-                'canLogin' => Route::has('login'),
-                'canRegister' => Route::has('register'),
-                'project'=>$project,
-                'is_author'=>true
-            ]);
-        }else{
-            return Inertia::render('ProjectBoard/Details',[
-                'canLogin' => Route::has('login'),
-                'canRegister' => Route::has('register'),
-                'project'=>$project,
-                'is_author'=>false
-            ]);
-        }
-        
+        //
     }
 
     /**
