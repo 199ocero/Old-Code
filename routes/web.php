@@ -37,6 +37,7 @@ Route::middleware([
     Route::resource('/category',CategoryController::class);
 
     // Request
+    Route::get('/request',[RequestPermissionController::class,'index'])->name('request.index');
     Route::get('/request/{id}',[RequestPermissionController::class,'create'])->name('request.create');
-    Route::post('/request/{id}',[RequestPermissionController::class,'store'])->name('request.store');
+    Route::post('/request/{project_id}/{author_id}',[RequestPermissionController::class,'store'])->name('request.store');
 });

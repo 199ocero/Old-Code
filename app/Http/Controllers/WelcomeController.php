@@ -17,7 +17,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $project = ProjectResource::collection(Project::latest()->take(4)->get());
+        $project = ProjectResource::collection(Project::latest()->take(5)->get());
         return Inertia::render('Welcome',[
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),

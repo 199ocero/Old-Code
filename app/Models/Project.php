@@ -19,4 +19,7 @@ class Project extends Model
     public function projectCategory(){
         return $this->hasMany(ProjectCategory::class);
     }
+    public function requestPermission(){
+        return $this->hasMany(RequestPermission::class);
+    }
 }

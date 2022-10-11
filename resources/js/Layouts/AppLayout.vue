@@ -72,6 +72,12 @@ const logout = () => {
                                     Projects
                                 </NavLink>
                                 <NavLink
+                                    :href="route('request.index')"
+                                    :active="route().current('request.index')"
+                                >
+                                    Requests
+                                </NavLink>
+                                <NavLink
                                     v-if="$page.props.is_admin"
                                     :href="route('category.index')"
                                     :active="

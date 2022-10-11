@@ -15,7 +15,9 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("request.store", props.project.data.id));
+    form.post(
+        "/request/" + props.project.data.id + "/" + props.project.data.user_id
+    );
 };
 </script>
 

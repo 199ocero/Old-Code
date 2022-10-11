@@ -11,6 +11,15 @@ class RequestPermission extends Model
     protected $fillable = [
         'project_id',
         'requester_id',
+        'author_id',
         'request',
+         'status',
     ];
+
+    public function project(){
+        return $this->belongsTo(Project::class,'project_id','id');
+    }
+    public function requester(){
+        return $this->belongsTo(User::class,'requester_id','id');
+    }
 }

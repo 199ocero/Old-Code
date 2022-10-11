@@ -20,7 +20,10 @@ class RequestPermissionController extends Controller
      */
     public function index()
     {
-        // 
+        $requestPermission = RequestPermission::latest()->where('author_id',Auth::id())->with(['project','requester'])->paginate(5);
+        return Inertia::render('Request/Index',[
+            'request'=>$requestPermission
+        ]);
     }
 
     /**
@@ -55,18 +58,21 @@ class RequestPermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $project_id,$author_id)
     {
         $request->validate([
             'request'=>['required','min:3'],
         ]);
         RequestPermission::create([
-            'project_id'=>$id,
+            'project_id'=>$project_id,
             'requester_id'=>Auth::id(),
+            'author_id'=>$author_id,
             'request'=>$request->input('request'),
+            // 0 = decline , 1 = approve, 2 = pending
+            'status'=>2, 
         ]);
 
-        return Redirect::route('project-board.show',$id);
+        return Redirect::route('project-board.show',$project_id);
     }
 
     /**
